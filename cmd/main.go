@@ -50,7 +50,11 @@ func run(server string) error {
 			Check is user modes and join IRC channel.
 		*/
 		if lib.Find(ircRead, "+i") || lib.Find(ircRead, "+w") || lib.Find(ircRead, "+x") {
-			b.Send(fmt.Sprint("JOIN " + IRC_CHANNEL + IRC_CHANNEL_KEY))
+			joinCommand := fmt.Sprintf("JOIN %s", IRC_CHANNEL)
+			if IRC_CHANNEL_KEY != "" {
+				joinCommand = fmt.Sprintf("JOIN %s %s", IRC_CHANNEL, IRC_CHANNEL_KEY)
+			}
+			b.Send(joinCommand)
 		}
 
 		go func() {
